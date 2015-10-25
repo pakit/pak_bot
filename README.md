@@ -1,2 +1,3 @@
-# recipe_bot
-Automated test of recipes for pakit
+# Pak Bot
+
+I make sure recipes actually work.
