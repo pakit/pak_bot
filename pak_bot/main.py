@@ -9,7 +9,3 @@ def main():
     Main entry into pak_bot.
     """
     print('hello')
-
-
-if __name__ == "__main__":
-    main()
