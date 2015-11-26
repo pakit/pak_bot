@@ -1,0 +1,12 @@
+[run]
+branch = True
+source = pak_bot
+
+[report]
+exclude_lines =
+  pragma: no cover
+  argv = sys.argv
+  raise NotImplementedError
+show_missing = True
+
+; vim:set ft=dosini et sw=2 ts=2 sts=2:
