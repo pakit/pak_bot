@@ -2,10 +2,22 @@
 Used for pytest plugins & session scoped fixtures.
 """
 from __future__ import absolute_import
-
+import sys
 import mock
 import pytest
-import sys
+
+import tests.common as tc
+
+
+@pytest.fixture(scope='session', autouse=True)
+def setup_test_bed(request):
+    """
+    Fixture sets up the testing environment for pakit as a whole.
+
+    Session scope, executes before all tests.
+    """
+    request.addfinalizer(tc.env_teardown)
+    tc.env_setup()
 
 
 @pytest.yield_fixture()
