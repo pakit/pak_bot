@@ -1,6 +1,5 @@
 [run]
 branch = True
-source = pak_bot
 
 [report]
 exclude_lines =
