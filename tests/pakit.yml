@@ -1,0 +1,17 @@
+pakit:
+  command:
+    timeout: 120
+  defaults:
+    repo: stable
+  log:
+    enabled: true
+    file: /tmp/staging/main.log
+  paths:
+    link: /tmp/staging/link
+    prefix: /tmp/staging/builds
+    recipes: /tmp/staging/recipes
+    source: /tmp/staging/src
+  recipe:
+    update_interval: 86400
+    uris:
+    - uri: https://github.com/pakit/base_recipes
