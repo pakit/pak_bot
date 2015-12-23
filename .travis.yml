@@ -1,13 +1,11 @@
 language: python
+python: 2.7
 sudo: false
-matrix:
-  include:
-    - python: 2.7
-      env: TOXENV=flake8
-    - python: 2.7
-      env: TOXENV=pylint
-    - python: 2.7
-      env: TOXENV=coverage
+env:
+  matrix:
+    - TOXENV=coverage
+    - TOXENV=flake8
+    - TOXENV=pylint
 install: |
   pip install coveralls tox
 script: |
