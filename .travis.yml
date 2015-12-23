@@ -1,23 +1,6 @@
 language: python
-python:
-  - 2.7
-cache:
-  directories:
-    - $DEPS
-env:
-  global:
-    - DEPS=$HOME/deps
-    - PATH=$DEPS/bin:$PATH
-  matrix:
-    # 'coverage' runs the regular test suite & reports to coveralls
-    - TOXENV=coverage
-    - TOXENV=flake8
-    - TOXENV=pylint
+sudo: false
 matrix:
-  exclude:
-    - env: TOXENV=coverage
-    - env: TOXENV=flake8
-    - env: TOXENV=pylint
   include:
     - python: 2.7
       env: TOXENV=flake8
@@ -26,9 +9,7 @@ matrix:
     - python: 2.7
       env: TOXENV=coverage
 install: |
-  cp -f ./tests/.hgrc $HOME
-  cp -f ./tests/pakit.yaml $HOME/.pakit.yaml
-  pip install coveralls tox pyyaml
+  pip install coveralls tox
 script: |
   tox
 after_success: |
