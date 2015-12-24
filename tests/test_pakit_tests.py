@@ -8,8 +8,8 @@ import mock
 import pytest
 
 from pakit_tests import (
-    create_args_parser, extract_repo_names, main, scan_recipes,
-    format_lines, write_file, TEMPLATE
+    create_args_parser, extract_repo_names, extract_repo_block, main,
+    scan_recipes, format_lines, write_file, TEMPLATE
 )
 import tests.common as tc
 
@@ -30,11 +30,35 @@ def test_parse_output():
 
 
 def test_extract_repo_names():
-    sample = """self.repos = {
+    text = """self.repos = {
     'stable': Git(self.src, tag='0.31.0'),
     'unstable': Git(self.src),
     }"""
-    assert extract_repo_names(sample) == ['stable', 'unstable']
+    assert extract_repo_names(text) == ['stable', 'unstable']
+
+
+def test_extract_repo_block():
+    text = """class Ag(Recipe):
+    \"\"\"
+    Grep like tool optimized for speed
+    \"\"\"
+    def __init__(self):
+        super(Ag, self).__init__()
+        self.src = 'https://github.com/ggreer/the_silver_searcher.git'
+        self.homepage = self.src
+        self.repos = {
+            "stable": Git(self.src, tag='0.31.0'),
+            'unstable': Git(self.src),
+        }
+
+    def build(self):
+        self.cmd('./build.sh --prefix {prefix}')
+        self.cmd('make install')"""
+    expect = """self.repos = {
+            "stable": Git(self.src, tag='0.31.0'),
+            'unstable': Git(self.src),
+        }"""
+    assert extract_repo_block(text) == expect
 
 
 def test_scan_recipes():

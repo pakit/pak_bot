@@ -123,6 +123,16 @@ def extract_repo_names(text):
     return results
 
 
+def extract_repo_block(text):
+    """
+    Given a string, extract ONLY the repos dictionary block.
+
+    Returns:
+        A string containing only required block.
+    """
+    return re.search(r'(self.repos\s*=\s*{.*?})', text, re.DOTALL).group(1)
+
+
 def format_lines(recipes):
     """
     Transform the dictionary to lines to write.
@@ -159,7 +169,7 @@ def scan_recipes(recipe_d):
         with open(fname, 'r+') as fin:
             text = mmap.mmap(fin.fileno(), 0)
         if matcher.search(text) is not None:
-            data[short_name] = extract_repo_names(text)
+            data[short_name] = extract_repo_names(extract_repo_block(text))
 
     return data
 
