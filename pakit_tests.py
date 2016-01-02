@@ -59,7 +59,6 @@ def write_config(tail):
     root = tempfile.mkdtemp()
     recipe_d = os.path.join(root, 'recipe')
     os.mkdir(recipe_d)
-    # TODO: Pass in folder via command.
     os.symlink('ROOT_RECS',
                os.path.join(recipe_d, 'test_recipes'))
 
