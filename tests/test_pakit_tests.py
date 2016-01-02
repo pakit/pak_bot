@@ -73,19 +73,19 @@ def test_format_lines():
         'ack': ['stable'],
     }
     lines = format_lines(data)
-    expect = """\nclass Test_ack(BaseRecipeTest):
+    expect = """\nclass Test_ack(RecipeTest):
     def test_stable(self):
-        self.recipe.repo = 'stable'
-        pakit.task.InstallTask(self.recipe).run()
+        assert subprocess.call(self.args, cwd=self.temp_d,
+                               env=self.new_env) == 0
 
-\nclass Test_ag(BaseRecipeTest):
+\nclass Test_ag(RecipeTest):
     def test_stable(self):
-        self.recipe.repo = 'stable'
-        pakit.task.InstallTask(self.recipe).run()
+        assert subprocess.call(self.args, cwd=self.temp_d,
+                               env=self.new_env) == 0
 
     def test_unstable(self):
-        self.recipe.repo = 'unstable'
-        pakit.task.InstallTask(self.recipe).run()"""
+        assert subprocess.call(self.args, cwd=self.temp_d,
+                               env=self.new_env) == 0"""
 
     assert '\n'.join(lines) == expect
 
@@ -95,7 +95,7 @@ def test_write_file():
         test_file = tempfile.NamedTemporaryFile()
         write_file(tc.RECIPES, test_file.name)
         with open(test_file.name, 'r') as fin:
-            assert TEMPLATE in fin.read()
+            assert TEMPLATE.replace('ROOT_RECS', tc.RECIPES) in fin.read()
     finally:
         test_file.close()
 
